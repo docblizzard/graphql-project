@@ -4,6 +4,9 @@ import {gql} from 'graphql-tag'
 import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
 import { TrackAPI } from './datasources/TrackAPI.js';
+import { GhibliAPI } from './datasources/GhibliAPI.js';
+import { getUser } from './modules/auth.js';
+import db from '../prisma/db.js';
 
 
 const server = new ApolloServer({
@@ -13,12 +16,18 @@ const server = new ApolloServer({
    
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
-    context: async () => {
+    context: async ({req}) => {
+      const authorization = (req.headers.authorization)?.split('Bearer ')?.[1]
+      const user = authorization ? getUser(authorization) : null;
+
         const cache = server.cache
         return {
           dataSources: {
-            trackAPI: new TrackAPI({cache})
-          }
+            db,
+            trackAPI: new TrackAPI({cache}),
+            ghibliApi: new GhibliAPI({cache})
+          },
+          user,
         }
       }
   });
