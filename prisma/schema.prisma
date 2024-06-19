@@ -32,5 +32,23 @@ model User {
   id       String     @id @unique @default(uuid())
   username String     @unique
   password String
-  todoList TodoList[]
+  Comment  Comment[]?
+  Post     Post[]?
 }
+
+model Comment {
+  id      String @id @unique @default(uuid())
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String
+  Post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  comment String
+}
+
+model Post {
+  id      String    @id @unique @default(uuid())
+  User    User      @relation(fields: [userId], references: [id])
+  userId  String
+  Title   String
+  comment Comment[]?
+  }

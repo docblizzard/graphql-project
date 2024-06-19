@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { TrackModel, AuthorModel, FilmModel, PeopleModel } from './models';
+import { TrackModel, AuthorModel, FilmModel, PeopleModel } from './models/models';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;

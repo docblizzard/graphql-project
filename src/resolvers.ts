@@ -1,5 +1,5 @@
 import { createUser } from "./mutations/users/createUser.js";
-import { signIn } from "./mutations/users/SignIn.js";
+import { signIn } from "./mutations/users/signIn.js";
 import { Resolvers, Speciality } from "./types.js";
 
 const doctorsData = [

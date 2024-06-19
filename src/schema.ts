@@ -92,7 +92,6 @@ export const typeDefs = gql`
     success: Boolean!
     track: Track
   }
- 
   enum Speciality {
     PSYCHOLOGIST
     OPHTALMOLOGIST
