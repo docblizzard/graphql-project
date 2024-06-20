@@ -1,18 +1,18 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-export const createPost = async (_, { title, content }, { dataSources }, __) => {
+export const createComment = async (_, { comment }, { dataSources }, __) => {
     try {
-        const createdPost = await dataSources.db.post.create({
+        const createdComment = await dataSources.db.comment.create({
             data: {
+                postId: "test",
                 userId: "ea79eafe-f24a-4465-9438-bf89df231168",
-                title,
-                content,
+                comment
             }
         });
         return {
             code: 201,
             message: 'Created post',
             success: true,
-            post: createdPost
+            comment: createdComment
         };
     }
     catch (e) {
@@ -21,14 +21,14 @@ export const createPost = async (_, { title, content }, { dataSources }, __) => 
                 code: 401,
                 message: e.message,
                 success: false,
-                post: null,
+                comment: null,
             };
         }
         return {
             code: 400,
             message: e.message,
             success: false,
-            post: null,
+            comment: null,
         };
     }
 };

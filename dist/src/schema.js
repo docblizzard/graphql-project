@@ -27,7 +27,7 @@ export const typeDefs = gql `
     photo: String
   }
 
-  type Film { 
+  type Film {
     id: ID!
     title: String
     people: [People]!
@@ -115,13 +115,15 @@ export const typeDefs = gql `
   }
 
   type CreatePostResponse {
-    post: Post!
+    code: Int!
+    post: Post
     message: String!
     success: Boolean!
   }
 
   type CreateCommentResponse {
-    comment: Comment!
+    code: Int!
+    comment: Comment
     message: String!
     success: Boolean!
   }

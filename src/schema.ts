@@ -28,7 +28,7 @@ export const typeDefs = gql`
     photo: String
   }
 
-  type Film { 
+  type Film {
     id: ID!
     title: String
     people: [People]!
