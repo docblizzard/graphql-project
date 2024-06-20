@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
-
-export const typeDefs = gql`
+export const typeDefs = gql `
 
   type Doctor {
     id: ID!
@@ -116,15 +115,13 @@ export const typeDefs = gql`
   }
 
   type CreatePostResponse {
-    code: Int!
-    post: Post
+    post: Post!
     message: String!
     success: Boolean!
   }
 
   type CreateCommentResponse {
-    code: Int!
-    comment: Comment
+    comment: Comment!
     message: String!
     success: Boolean!
   }

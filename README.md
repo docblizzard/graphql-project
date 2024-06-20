@@ -12,3 +12,9 @@ npm run prisma format
 ```
 npm run generate
 ```
+
+# Apply migrations from Prisma
+
+```
+npm run prisma migrate dev --name init
+```

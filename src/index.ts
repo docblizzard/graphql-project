@@ -19,17 +19,16 @@ const server = new ApolloServer({
     context: async ({req}) => {
       const authorization = (req.headers.authorization)?.split('Bearer ')?.[1]
       const user = authorization ? getUser(authorization) : null;
-
-        const cache = server.cache
-        return {
-          dataSources: {
-            db,
-            trackAPI: new TrackAPI({cache}),
-            ghibliApi: new GhibliAPI({cache})
-          },
-          user,
-        }
+      const cache = server.cache
+      return {
+        dataSources: {
+          db,
+          trackAPI: new TrackAPI({cache}),
+          ghibliApi: new GhibliAPI({cache})
+        },
+        user,
       }
+    }
   });
    
   console.log(`🚀  Server ready at: ${url}`);

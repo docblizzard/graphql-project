@@ -13,33 +13,18 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model TodoList {
-  id       String     @id @unique @default(uuid())
-  name     String
-  TodoItem TodoItem[]
-  User     User?      @relation(fields: [userId], references: [id])
-  userId   String?
-}
-
-model TodoItem {
-  id          String   @id @default(uuid())
-  description String
-  todoList    TodoList @relation(fields: [todoListId], references: [id])
-  todoListId  String
-}
-
 model User {
   id       String     @id @unique @default(uuid())
   username String     @unique
   password String
-  Comment  Comment[]?
-  Post     Post[]?
+  comment  Comment[]
+  post     Post[]
 }
 
 model Comment {
   id      String @id @unique @default(uuid())
   User    User   @relation(fields: [userId], references: [id])
-  userId  String
+  userId  String 
   Post    Post   @relation(fields: [postId], references: [id])
   postId  String
   comment String
@@ -49,6 +34,7 @@ model Post {
   id      String    @id @unique @default(uuid())
   User    User      @relation(fields: [userId], references: [id])
   userId  String
-  Title   String
-  comment Comment[]?
+  title   String
+  content String
+  comment Comment[]
   }

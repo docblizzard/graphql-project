@@ -1,3 +1,4 @@
+import { createPost } from "./mutations/posts/createPost.js";
 import { createUser } from "./mutations/users/createUser.js";
 import { signIn } from "./mutations/users/signIn.js";
 import { Resolvers, Speciality } from "./types.js";
@@ -76,7 +77,8 @@ export const resolvers: Resolvers = {
         }
       },
       createUser,
-      signIn
+      signIn,
+      createPost
     },
 
     Track: {
