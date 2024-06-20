@@ -3,8 +3,6 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import {gql} from 'graphql-tag'
 import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
-import { TrackAPI } from './datasources/TrackAPI.js';
-import { GhibliAPI } from './datasources/GhibliAPI.js';
 import { getUser } from './modules/auth.js';
 import db from '../prisma/db.js';
 
@@ -25,8 +23,6 @@ const server = new ApolloServer({
       return {
         dataSources: {
           db,
-          trackAPI: new TrackAPI({cache}),
-          ghibliApi: new GhibliAPI({cache})
         },
         user,
       }

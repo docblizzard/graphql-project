@@ -18,3 +18,9 @@ npm run generate
 ```
 npm run prisma migrate dev --name init
 ```
+
+# Reset all rows from Database
+
+```
+npm run prisma migrate reset
+```
