@@ -1,5 +1,10 @@
 # graphql-project
 
+### Participant Groupe 15
+- Elwin Bassaget
+
+
+
 # Automatiser relation via prisma
 
 ```

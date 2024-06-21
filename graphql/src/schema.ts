@@ -5,6 +5,34 @@ export const typeDefs = gql`
 
   scalar DateTime
 
+  type User {
+    id: ID!
+    username: String!
+    comment: [Comment]
+    post: [Post]
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    comment: [Comment]
+    content: String!
+    userId: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+  }
+
+  type Comment {
+    id: ID!
+    userId: String!
+    comment: String!
+    postId: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+  }
+
   type Query {
     getPost: getPostResponse!
     getComment: getCommentResponse!
@@ -32,34 +60,6 @@ export const typeDefs = gql`
     message: String!
     success: Boolean!
     token: String
-  }
-
-  type User {
-    id: ID!
-    username: String!
-    comment: [Comment]
-    post: [Post]
-  }
-
-  type Post {
-    id: ID!
-    title: String!
-    comment: [Comment]
-    content: String!
-    userId: String!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-
-  }
-  
-  type Comment {
-    id: ID!
-    userId: String!
-    comment: String!
-    postId: String!
-    createdAt: DateTime!
-    updatedAt: DateTime!
-
   }
 
   type CreatePostResponse {
