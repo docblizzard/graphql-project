@@ -100,7 +100,9 @@ export type Query = {
   getCommentByPostId: GetCommentResponse;
   getPost: GetPostResponse;
   getPostById: GetPostResponse;
-  getUser: GetUserResponse;
+  getUserById: GetUserResponse;
+  getUserByToken: GetUserResponse;
+  getUsers: GetUsersResponse;
 };
 
 
@@ -111,6 +113,16 @@ export type QueryGetCommentByPostIdArgs = {
 
 export type QueryGetPostByIdArgs = {
   userId: Scalars['String']['input'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  userId: Scalars['String']['input'];
+};
+
+
+export type QueryGetUserByTokenArgs = {
+  token: Scalars['String']['input'];
 };
 
 export type SignInResponse = {
@@ -147,6 +159,14 @@ export type GetPostResponse = {
 
 export type GetUserResponse = {
   __typename?: 'getUserResponse';
+  code: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+  user?: Maybe<User>;
+};
+
+export type GetUsersResponse = {
+  __typename?: 'getUsersResponse';
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
@@ -241,6 +261,7 @@ export type ResolversTypes = {
   getCommentResponse: ResolverTypeWrapper<GetCommentResponse>;
   getPostResponse: ResolverTypeWrapper<GetPostResponse>;
   getUserResponse: ResolverTypeWrapper<GetUserResponse>;
+  getUsersResponse: ResolverTypeWrapper<GetUsersResponse>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -262,6 +283,7 @@ export type ResolversParentTypes = {
   getCommentResponse: GetCommentResponse;
   getPostResponse: GetPostResponse;
   getUserResponse: GetUserResponse;
+  getUsersResponse: GetUsersResponse;
 };
 
 export type CommentResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
@@ -325,7 +347,9 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getCommentByPostId?: Resolver<ResolversTypes['getCommentResponse'], ParentType, ContextType, RequireFields<QueryGetCommentByPostIdArgs, 'postId'>>;
   getPost?: Resolver<ResolversTypes['getPostResponse'], ParentType, ContextType>;
   getPostById?: Resolver<ResolversTypes['getPostResponse'], ParentType, ContextType, RequireFields<QueryGetPostByIdArgs, 'userId'>>;
-  getUser?: Resolver<ResolversTypes['getUserResponse'], ParentType, ContextType>;
+  getUserById?: Resolver<ResolversTypes['getUserResponse'], ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, 'userId'>>;
+  getUserByToken?: Resolver<ResolversTypes['getUserResponse'], ParentType, ContextType, RequireFields<QueryGetUserByTokenArgs, 'token'>>;
+  getUsers?: Resolver<ResolversTypes['getUsersResponse'], ParentType, ContextType>;
 };
 
 export type SignInResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['SignInResponse'] = ResolversParentTypes['SignInResponse']> = {
@@ -364,6 +388,14 @@ export type GetUserResponseResolvers<ContextType = DataSourceContext, ParentType
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GetUsersResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['getUsersResponse'] = ResolversParentTypes['getUsersResponse']> = {
+  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   user?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -382,5 +414,6 @@ export type Resolvers<ContextType = DataSourceContext> = {
   getCommentResponse?: GetCommentResponseResolvers<ContextType>;
   getPostResponse?: GetPostResponseResolvers<ContextType>;
   getUserResponse?: GetUserResponseResolvers<ContextType>;
+  getUsersResponse?: GetUsersResponseResolvers<ContextType>;
 };
 

@@ -37,7 +37,9 @@ export const typeDefs = gql`
     getPost: getPostResponse!
     getComment: getCommentResponse!
     getCommentByPostId(postId: String!): getCommentResponse!
-    getUser: getUserResponse!
+    getUsers: getUsersResponse!
+    getUserByToken(token: String!): getUserResponse!
+    getUserById(userId: String!): getUserResponse!
     getPostById(userId: String!): getPostResponse!
   }
   
@@ -91,6 +93,13 @@ export const typeDefs = gql`
   }
   
   type getUserResponse {
+    code: Int!
+    user: User
+    message: String!
+    success: Boolean!
+  }
+
+  type getUsersResponse {
     code: Int!
     user: [User]
     message: String!

@@ -18,8 +18,8 @@ const server = new ApolloServer({
       const authorization = (req.headers.authorization)
       const user = authorization ? getUser(authorization) : null;
       if (user){
+        console.log("user logged");
       }
-      const cache = server.cache
       return {
         dataSources: {
           db,

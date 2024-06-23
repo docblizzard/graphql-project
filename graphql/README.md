@@ -1,8 +1,7 @@
 # graphql-project
 
-### Participant Groupe 15
+### Participant Groupe 14
 - Elwin Bassaget
-
 
 
 # Automatiser relation via prisma

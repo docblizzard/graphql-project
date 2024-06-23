@@ -7,10 +7,15 @@ export const signIn: MutationResolvers['signIn'] = async (_, {password, username
     const isValidPassword = await comparePasswords(password, user.password)
 
     if(!isValidPassword) {
-        throw new Error('Invalid password provided');
+      console.log("wrong")
+        return {
+          code: 401,
+          message: 'Username or password is incorrect',
+          success: false,
+          token: null
+        }
     }
     const token = createJWT(user);
-
     return {
       code: 200,
       message: 'User has been signed',
@@ -18,6 +23,7 @@ export const signIn: MutationResolvers['signIn'] = async (_, {password, username
       token
     }
   } catch(e) {
+    console.log("check") 
     console.log(`${(e as Error)?.message}`)
     return {
       code: 403,
