@@ -1,11 +1,10 @@
-import http from './api';
 import store from '@/store/vuex';
 import gql from 'graphql-tag';
 import { apolloClient } from '@/services/apolloClient';
 
 class authService {
 
-    async loginUser({username, password}) {
+    async loginUser({username, password}: {username: string, password: string}) {
       const signIn = gql`
         mutation SignIn($username: String!, $password: String!) {
           signIn(username: $username, password: $password) {

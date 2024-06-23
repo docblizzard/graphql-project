@@ -29,7 +29,7 @@ class postService {
         }
     }
 
-    async createPost({content}){
+    async createPost({content}: {content:String}){
         const createPost = gql`
             mutation CreatePost($title: String!, $content: String!) {
             createPost(title: $title, content: $content) {

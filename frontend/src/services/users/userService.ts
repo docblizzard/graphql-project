@@ -3,7 +3,7 @@ import { apolloClient } from '@/services/apolloClient';
 
 class userService {
 
-    async getUserbyToken(token){
+    async getUserbyToken(token: string){
         const fetchUser = gql`
           query GetUserByToken($token: String!) {
             getUserByToken(token: $token) {
@@ -29,7 +29,7 @@ class userService {
         }
     }
 
-    async getUserbyId(userId){
+    async getUserbyId(userId: string){
         const fetchUser = gql`
           query getUserById($userId: String!) {
             getUserById(userId: $userId) {
@@ -54,7 +54,7 @@ class userService {
         }
     }
     
-    async createUser({username, password}){
+    async createUser({username, password}: {username: string, password: string}){
         const createUser = gql`
             mutation CreateUser($username: String!, $password: String!) {
               createUser(username: $username, password: $password) {

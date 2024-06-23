@@ -6,7 +6,7 @@ import RegisterPage from '../views/RegisterPage.vue'
 import store from '@/store/vuex'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VUE_APP_URL),
   routes: [
     {
       path: '/',

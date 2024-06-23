@@ -8,9 +8,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import postService from '@/services/posts/postService';
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   data(){
     return {
 			content:''
@@ -30,11 +32,10 @@ export default {
             }
         } catch (error){
           console.log(error)
-          this.reset('Internal Server Error')
         }
 		}
 	},
-}
+})
 </script>
 
 <style scoped>

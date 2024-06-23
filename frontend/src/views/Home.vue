@@ -3,9 +3,10 @@
   <router-view></router-view>
 </template>
   
-<script>
+<script lang="ts">
 import TopMenu from '../components/Page/layout/TopMenuComponent.vue'
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   components:{
     TopMenu,
   },
@@ -14,7 +15,7 @@ export default {
       }
   },
   methods: {}
-}
+})
 </script>
 
 <style scoped>

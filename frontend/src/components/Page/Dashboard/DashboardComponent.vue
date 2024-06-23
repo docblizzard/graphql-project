@@ -7,19 +7,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import PostComponent from '@/components/PostComponent.vue'
 import postService from '@/services/posts/postService';
 import NewPostComponent from '@/components/NewPostComponent.vue';
+import { defineComponent } from 'vue';
+import { Post } from '@/models/models';
 
-export default {
+export default defineComponent({
   components: {
     PostComponent,
     NewPostComponent
   },
-  data() {
+  data() {  
     return {
-      post: []
+      post: [] as Post[]
     }
   },
   methods: {
@@ -37,7 +39,7 @@ export default {
     this.fetchPosts()
     }
 
-};
+});
 
 </script>
 

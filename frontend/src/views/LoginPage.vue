@@ -24,50 +24,51 @@
     </div>
   </template>
   
-  <script>
+<script lang="ts">
 import authService from '../services/authService';
+import { defineComponent } from 'vue';
 
-  export default {
-    data() {
-      return {
-        username: '',
-        password: '',
-        message: '',
-        user: '',
-      }
-    },
-    methods: {
-      async login() {
-        try {
-            const res = await authService.loginUser({
-                username: this.username,
-                password: this.password
-            })
-            if (res.code === 200){
-              console.log("not failed :" + res.code)
-              this.$store.dispatch('login', { token: res.token });
-              this.$router.push('/');
-            }
-            else this.reset(res.message)
-        } catch (error){
-          console.log(error)
-          this.reset('Internal Server Error')
-        }
-      },
-      reset(errorMessage){
-        this.message = errorMessage
-        this.password = ''
-      },
-      closeAlert(){
-        this.message = ''
-      },
-      redirectToRegister(){
-        this.$router.push('/register');
-      }
-    },
-    async mounted() {
+export default defineComponent({
+  data() {
+    return {
+      username: '',
+      password: '',
+      message: '',
+      user: '',
     }
-  };
+  },
+  methods: {
+    async login() {
+      try {
+          const res = await authService.loginUser({
+              username: this.username,
+              password: this.password
+          })
+          if (res.code === 200){
+            console.log("not failed :" + res.code)
+            this.$store.dispatch('login', { token: res.token });
+            this.$router.push('/');
+          }
+          else this.reset(res.message)
+      } catch (error){
+        console.log(error)
+        this.reset('Internal Server Error')
+      }
+    },
+    reset(errorMessage: string){
+      this.message = errorMessage
+      this.password = ''
+    },
+    closeAlert(){
+      this.message = ''
+    },
+    redirectToRegister(){
+      this.$router.push('/register');
+    }
+  },
+  async mounted() {
+  }
+})
 </script>
 
 <style scoped>

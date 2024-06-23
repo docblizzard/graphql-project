@@ -1,5 +1,5 @@
 class TokenService {
-    setUser(userToken){
+    setUser(userToken: string){
         localStorage.setItem("user", JSON.stringify(userToken))
     }
 

@@ -10,16 +10,17 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import authService from '@/services/authService';
 import userService from '@/services/users/userService';
+import { User } from '@/models/models';
+import { defineComponent } from 'vue';
 
-
-export default {
+export default defineComponent({
   data() {
     return {
       selectedTab: '',
-      user: ''
+      user: {} as User
     };
   },
   methods: {
@@ -31,17 +32,21 @@ export default {
         console.error("Logout error:", error);
       }
     },
-    selectTab(tab) {
+    selectTab(tab: string) {
       this.selectedTab = tab;
       this.$router.push(tab.toLowerCase())
     },
   },
 
   async mounted() {
-    const res = await userService.getUserbyToken(localStorage.getItem('user'))
-    this.user = res
+    const token = localStorage.getItem('user')
+    if (token !== null) {
+      const res = await userService.getUserbyToken(token);
+      this.user = res
   }
-};
+  }
+})
+
 </script>
 
 <style scoped>

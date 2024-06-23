@@ -19,36 +19,37 @@
     </div>
   </template>
   
-  <script>
+<script lang="ts">
 import authService from '@/services/authService';
 import UserService from '@/services/users/userService';
+import { defineComponent } from 'vue';
 
-  export default {
-    data() {
-      return {
-        formData: {
-          username: '',
-          password: ''
-        },
-        message:''
-      };
+export default defineComponent({
+  data() {
+    return {
+      formData: {
+        username: '',
+        password: ''
+      },
+      message:''
+    };
+  },
+  methods: {
+    async register() {
+        const res = await UserService.createUser(this.formData)
+        this.$router.push('/login');
     },
-    methods: {
-      async register() {
-          const res = await UserService.createUser(this.formData)
-          this.$router.push('/login');
-
-      },
-      reset(errorMessage){
-        this.message = errorMessage
-        this.formData.pwd = ''
-      },
-      closeAlert(){
-        this.message = ''
-      }
+    reset(errorMessage: string){
+      this.message = errorMessage
+      this.formData.password = ''
+    },
+    closeAlert(){
+      this.message = ''
     }
-  };
-  </script>
+  }
+})
+
+</script>
   
   <style scoped>
   h2 {
