@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../components/Page/Dashboard/DashboardComponent.vue'
-import Fanatec from '../components/Page/Fanatec/FanatecComponent.vue'
-import Logitech from '../components/Page/Logitech/LogitechComponent.vue'
 import LoginPage from '../views/LoginPage.vue'
 import RegisterPage from '../views/RegisterPage.vue'
 import store from '@/store/vuex'
@@ -20,19 +18,6 @@ const router = createRouter({
           component: Dashboard,
           meta: { requiresAuth: true },
         },  
-        {
-          path: 'fanatec',
-          name: 'Fanatec',
-          component: Fanatec,
-          meta: { requiresAuth: true },
-        },
-        {
-          path:'logitech',
-          name:'Logitech',
-          component: Logitech,
-          meta: { requiresAuth: true },
-        }
-
       ]
     },
     {
@@ -53,7 +38,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     const isAuthenticated = store.state.isAuthenticated;
-
     if (!isAuthenticated) {
       console.log("not logged");
       next({ name: 'login' });

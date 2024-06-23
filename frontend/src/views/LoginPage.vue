@@ -32,7 +32,8 @@ import authService from '../services/authService';
       return {
         username: '',
         password: '',
-        message: ''
+        message: '',
+        user: '',
       }
     },
     methods: {
@@ -40,23 +41,17 @@ import authService from '../services/authService';
         try {
             const res = await authService.loginUser({
                 username: this.username,
-                pwd: this.password
+                password: this.password
             })
-            console.log("not failed :" + res)
-            this.$store.dispatch('login', { token: res });
-            this.$router.push('/');
-
+            if (res.code === 200){
+              console.log("not failed :" + res.code)
+              this.$store.dispatch('login', { token: res.token });
+              this.$router.push('/');
+            }
+            else this.reset(res.message)
         } catch (error){
           console.log(error)
-            if (error.response.status === 500){
-                this.reset('Internal Server Error')
-            }
-            else if(error.response.status === 401){
-                console.log("here")
-                this.reset('Invalid username or password')
-            }
-            else 
-            this.reset(error.response.data)
+          this.reset('Internal Server Error')
         }
       },
       reset(errorMessage){
@@ -70,7 +65,8 @@ import authService from '../services/authService';
         this.$router.push('/register');
       }
     },
-
+    async mounted() {
+    }
   };
 </script>
 

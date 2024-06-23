@@ -1,4 +1,4 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloLink, concat } from '@apollo/client/core'
 import { createApolloProvider } from '@vue/apollo-option'
 
 // HTTP connection to the API
@@ -10,12 +10,24 @@ const httpLink = createHttpLink({
 // Cache implementation
 const cache = new InMemoryCache()
 
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: localStorage.getItem('user') || null,
+    }
+  }));
+  return forward(operation);
+})
+
+
 // Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
+export const apolloClient = new ApolloClient({
+  link: concat(authMiddleware, httpLink),
   cache,
 })
 
-const apolloProvider = createApolloProvider({
+export const apolloProvider = createApolloProvider({
     defaultClient: apolloClient,
 })

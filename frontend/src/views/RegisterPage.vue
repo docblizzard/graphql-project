@@ -4,14 +4,9 @@
         <h2>Make a new account </h2>
         <label for="username">Username:</label>
         <input v-model="formData.username" type="text" id="username-register" name="username" required>
-        
-        <label for="email">Email:</label>
-        <input v-model="formData.email" type="email" id="email-register" name="email" required>
   
         <label for="password">Password:</label>
-        <input v-model="formData.pwd" type="password" id="password-register" name="password" required>
-  
-  
+        <input v-model="formData.password" type="password" id="password-register" name="password" required>
         <button id="submit-register" type="submit">Register</button>
       </form>
       <Transition>
@@ -26,27 +21,23 @@
   
   <script>
 import authService from '@/services/authService';
+import UserService from '@/services/users/userService';
 
   export default {
     data() {
       return {
         formData: {
           username: '',
-          email: '',
-          pwd: ''
+          password: ''
         },
         message:''
       };
     },
     methods: {
       async register() {
-        try {
-          const res = await authService.registerUser(this.formData)
+          const res = await UserService.createUser(this.formData)
           this.$router.push('/login');
-        } catch (error){
-          console.log(error.response.data.error)
-            this.reset(error.response.data.error)
-        }
+
       },
       reset(errorMessage){
         this.message = errorMessage
