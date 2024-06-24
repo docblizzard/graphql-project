@@ -47,7 +47,7 @@ export const typeDefs = gql`
     createUser(username: String!, password: String!): CreateUserResponse!
     signIn(username: String!, password: String!): SignInResponse!
     createPost(title: String!, content: String! ): CreatePostResponse!
-    createComment(comment: String!): CreateCommentResponse!
+    createComment(comment: String!, postId: String!): CreateCommentResponse!
   }
 
   type CreateUserResponse {

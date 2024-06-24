@@ -5,6 +5,15 @@ import { QueryResolvers } from "../../types";
 export const getPost: QueryResolvers['getPost'] = 
     async (_, ___, {dataSources, user}, __) => {
         
+        if (!user) {
+            return {
+              code: 401,
+              message: 'Unauthorized',
+              success: false,
+              comment: null,
+            };
+        }
+
         try {
             const fetchedPosts = await dataSources.db.post.findMany();
             return {
@@ -34,6 +43,15 @@ export const getPost: QueryResolvers['getPost'] =
 
 export const getPostById: QueryResolvers['getPostById'] =
     async (_, {userId}, {dataSources, user}, __) => {
+        
+        if (!user) {
+            return {
+              code: 401,
+              message: 'Unauthorized',
+              success: false,
+              comment: null,
+            };
+        }
 
         try {
             const fetchedPosts = await dataSources.db.post.findMany({

@@ -39,7 +39,6 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     const isAuthenticated = store.state.isAuthenticated;
     if (!isAuthenticated) {
-      console.log("not logged");
       next({ name: 'login' });
     } else {
       next();
@@ -48,7 +47,6 @@ router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.isAuthenticated;
 
     if (isAuthenticated) {
-      console.log("already logged in");
       next({ name: 'home' });
     } else {
       next();

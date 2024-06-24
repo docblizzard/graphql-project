@@ -2,31 +2,43 @@
     <div class="post-container">
         <div class="username-title" v-if="user">{{ user.username }}</div>
         <div class="post-content">{{ post.content}}</div>
-        {{  post.createdAt }}
-        {{ formatDate(post.createdAt) }}
-        <div @click="openComment">Ouvrir les commentaires</div>
-        <div v-if="commentBoolean">
-          <CommentComponent
-          :postId="post.id">
-          </CommentComponent>
+        <div class="datepost">{{ formatDate(post.createdAt) }}</div>
+        <div class="comments-container">
+          <div class="open-comment" @click="openComment" v-if="comments">Open comments ({{ arrayLength(comments)}})</div>
+          <div class="new-comment" @click="openNewComment">Comment</div>
         </div>
+        <div v-if="openNewCommentBoolean">
+            <NewCommentComponent 
+            :postId="post.id">
+            </NewCommentComponent>
+        </div>
+        <div v-if="commentBoolean">
+            <CommentComponent
+            :postId="post.id">
+            </CommentComponent>
+        </div>
+
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import userService from '@/services/users/userService';
-import { Post } from '@/models/models';
+import { Post, Comment } from '@/models/models';
 import CommentComponent from './CommentComponent.vue';
 import commentService from '@/services/comments/commentService';
+import NewCommentComponent from './NewCommentComponent.vue';
+import dateUtilities from '@/utilities/dateUtility';
 
 export default defineComponent({
   components: {
-    CommentComponent
+    CommentComponent,
+    NewCommentComponent
   },
   data(){
     return {
-      commentBoolean: false
+      commentBoolean: false,
+      openNewCommentBoolean: false
     }
   },
   props: {
@@ -37,28 +49,33 @@ export default defineComponent({
   },
   methods: {
     formatDate(date: Date){
-      const dateformat = new Date(date)
-      
-      return dateformat
+      return dateUtilities.formatDate(date)
     },
+
     openComment(){
       console.log("open")
       this.commentBoolean = !this.commentBoolean
+    },
+    openNewComment(){
+      this.openNewCommentBoolean = !this.openNewCommentBoolean
+    },
+    arrayLength(comment: Comment[]){
+      return comment.length
     }
   },
   setup(props) {
-  // Define a reactive reference to hold the user data
+  const comments = ref<Comment[]>([]);
   const user = ref();
   watch(() => props.post, async (newPost) => {
     const res = await userService.getUserbyId(newPost.userId);
     user.value = res;
 
-    const resf = await commentService.getCommentsByPostId(newPost.id);
-    console.log(resf)
-    
+    const resComments: Comment[] = await commentService.getCommentsByPostId(newPost.id);
+    comments.value = resComments;
   }, { immediate: true });
   return {
-    user
+    user,
+    comments
   };
   }
 })
@@ -78,13 +95,36 @@ export default defineComponent({
 }
 
 .username-title{
+  margin-top: 10px;
   font-size: x-large;
-  font-weight: 700;
+  font-weight: 600;
 }
-
-.post-content{
+.comments-container{
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post-content, .new-comment{
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.post-content {
+  margin-top: 15px;
+}
+
+.new-comment{
+  cursor: pointer;
+  margin-right: 15px;
+}
+.open-comment{
+  cursor: pointer;
+}
+
+.datepost{
+  text-align: right;
+  font-size: small;
 }
 
 </style>

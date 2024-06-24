@@ -23,10 +23,8 @@ export default defineComponent({
 			try {
             const res = await postService.createPost({
                 content: this.content })
-
             if (res.code === 201){
 							this.content = '';
-              console.log("not failed :" + res.code)
 							this.$emit('createdPost');
 							window.location.reload()
             }

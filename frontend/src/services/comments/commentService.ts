@@ -22,7 +22,7 @@ class commentService {
             const { data } = await apolloClient.query({ query: fetchComments,
                 variables: {postId}
              });
-            return data.getCommentByPostId
+            return data.getCommentByPostId.comment
         }
         catch (error) {
             console.error('Error fetching comments:', error);
@@ -30,24 +30,24 @@ class commentService {
         }
     }
 
-    async createComment({comment}: {comment:String}) {
+    async createComment({comment, postId}: {comment:String, postId: String}) {
         const createComment = gql`
-            mutation CreateComment($comment: String!) {
-                createComment(comment: $comment) {
+            mutation CreateComment($comment: String!, $postId: String!) {
+              createComment(comment: $comment, postId: $postId) {
                 code
                 message
                 comment {
+                  id
                   comment
                   createdAt
-                  id
                   postId
                   userId
                 }
-            }
-        }`;
+              }
+            }`;
         try {
             const { data } = await apolloClient.mutate({mutation: createComment,
-                variables: { comment }
+                variables: { comment, postId }
             });
             return data.createComment
         }

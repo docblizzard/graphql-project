@@ -4,7 +4,15 @@ import { QueryResolvers } from "../../types";
 
 export const getComment: QueryResolvers['getComment'] = 
     async (_, ___, {dataSources, user}, __) => {
-        
+
+        if (!user) {
+            return {
+              code: 401,
+              message: 'Unauthorized',
+              success: false,
+              comment: null,
+            };
+        }
         try {
             const fetchedComments = await dataSources.db.comment.findMany();
             return {
@@ -34,14 +42,21 @@ export const getComment: QueryResolvers['getComment'] =
 
     export const getCommentByPostId: QueryResolvers['getCommentByPostId'] = 
     async (_, {postId}, {dataSources, user}, __) => {
-        
+
+        if (!user) {
+            return {
+              code: 401,
+              message: 'Unauthorized',
+              success: false,
+              comment: null,
+            };
+        }
         try {
             const fetchedComments = await dataSources.db.comment.findMany({
                 where: {
                     postId: postId
                 }}
             );
-            console.log(fetchedComments)
             return {
                 code: 201,
                 message: 'Fetched Comments',

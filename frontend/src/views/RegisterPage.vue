@@ -20,7 +20,6 @@
   </template>
   
 <script lang="ts">
-import authService from '@/services/authService';
 import UserService from '@/services/users/userService';
 import { defineComponent } from 'vue';
 
@@ -37,7 +36,12 @@ export default defineComponent({
   methods: {
     async register() {
         const res = await UserService.createUser(this.formData)
-        this.$router.push('/login');
+        if (res.code === 401) {
+          this.reset("Username already taken")
+        }
+        else {
+          this.$router.push('/login');
+        }
     },
     reset(errorMessage: string){
       this.message = errorMessage

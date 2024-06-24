@@ -2,7 +2,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { MutationResolvers } from "../../types.js";
 
 export const createComment: MutationResolvers['createComment'] =
-    async (_, { comment }, {dataSources, user}, __) => {
+    async (_, { comment, postId }, {dataSources, user}, __) => {
 
     if (!user) {
         return {
@@ -18,7 +18,7 @@ export const createComment: MutationResolvers['createComment'] =
             data: {
                 comment,
                 userId: user.id,
-                postId: "3b0f95ca-c5a4-4e58-adc6-c6a25285d60f"
+                postId: postId
             }
         })
         return {
